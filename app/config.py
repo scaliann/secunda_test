@@ -12,17 +12,17 @@ load_dotenv(dotenv_path=Path(__file__).resolve().parent.parent / ".env")
 class Settings(BaseSettings):
     """Настройки проекта"""
 
-    db_name: str = "organizations"
-    db_username: str = "postgres"
-    db_password: str = "postgres"
-    db_host: str = "localhost"
-    db_port: int = 5429
+    db_name: str = ""
+    db_username: str = ""
+    db_password: str = ""
+    db_host: str = ""
+    db_port: int
     db_echo: bool = False
 
-    token: str = ""
+    api_key: str = ""
 
     class Config:
-        env_file = ".env"
+        env_file = "../.env"
 
 
 @lru_cache

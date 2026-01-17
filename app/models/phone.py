@@ -4,7 +4,10 @@ from app.models.base import Base
 
 
 class Phone(Base):
-    __tablename__ = "phones"
+    """Модель для телефонов."""
+
+    __tablename__ = "phone"
+
     id = Column(Integer, primary_key=True)
     organization_id = Column(Integer, ForeignKey("organization.id"))
-    phone_number = Column(String)
+    phone_number = Column(String, nullable=False)

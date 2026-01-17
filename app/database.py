@@ -1,5 +1,4 @@
 from collections.abc import AsyncGenerator
-from contextlib import asynccontextmanager
 from os import environ
 from uuid import uuid4
 
@@ -12,7 +11,7 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
-from config import get_settings
+from app.config import get_settings
 
 settings = get_settings()
 

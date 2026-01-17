@@ -1,11 +1,6 @@
-from sqlalchemy.orm import selectinload, aliased
-
 from app.api.filters.organization import OrganizationFilterSchema
-from app.models.activity import Activity
 from app.models.building import Building
 from app.models.organization import Organization
-from app.models.organization_activity import OrganizationActivity
-from app.models.phone import Phone
 from app.repositories.base import Repository
 import sqlalchemy as sa
 
@@ -15,12 +10,10 @@ class OrganizationRepository(Repository):
 
     async def get_organizations(
         self,
-        building_ids: list[int] | None = None,
+        filters: OrganizationFilterSchema,
         organization_ids: list[int] | None = None,
     ) -> list[tuple[Organization, Building]]:
-        """
-        Получить организации по фильтрам.
-        """
+        """Получить организации по фильтрам."""
 
         query = sa.select(
             Organization,
@@ -30,10 +23,10 @@ class OrganizationRepository(Repository):
             self.model.building_id == Building.id,
         )
 
-        if building_ids:
+        if filters.building_ids:
             query = query.where(
                 self.model.building_id.in_(
-                    building_ids,
+                    filters.building_ids,
                 ),
             )
 
@@ -44,6 +37,26 @@ class OrganizationRepository(Repository):
                 )
             )
 
+        if filters.search_str:
+            query = query.where(self.model.name.ilike(f"%{filters.search_str}%"))
+
         result = await self.session.execute(query)
 
         return result.all()
+
+    async def get_organization_by_building_ids(
+        self,
+        building_ids: list[int] | None,
+    ) -> list[Organization]:
+        """Получить организации по building_ids"""
+
+        query = sa.select(
+            Organization,
+        ).where(
+            self.model.building_id.in_(
+                building_ids,
+            )
+        )
+
+        result = await self.session.execute(query)
+        return list(result.scalars().all())

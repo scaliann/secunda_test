@@ -5,9 +5,9 @@ T = TypeVar("T")
 
 
 def get_repository[T](repo_cls: type[T]) -> T:
-    """Get repository."""
+    """Получить репозиторий."""
 
     def _get_repository(self) -> T:
-        return repo_cls(self.session)  # type: ignore
+        return repo_cls(self.session)
 
-    return cached_property(_get_repository)  # type: ignore
+    return cached_property(_get_repository)

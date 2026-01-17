@@ -1,8 +1,4 @@
-from sqlalchemy.orm import selectinload
-
-from app.api.filters.organization import OrganizationFilterSchema
 from app.models.activity import Activity
-from app.models.organization import Organization
 from app.models.organization_activity import OrganizationActivity
 from app.repositories.base import Repository
 import sqlalchemy as sa
