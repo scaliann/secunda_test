@@ -26,7 +26,7 @@ class OrganizationRepository(Repository):
         if filters.building_ids:
             query = query.where(
                 self.model.building_id.in_(
-                    filters.building_ids,
+                    filters.building_ids_list,
                 ),
             )
 

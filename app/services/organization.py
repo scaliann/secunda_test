@@ -75,7 +75,6 @@ class OrganizationService:
         organization_ids: list[int] | None = None,
     ) -> OrganizationsListResponse:
         """Общий метод для получения организаций с формированием ответа."""
-
         organizations = await self.organization_repository.get_organizations(
             filters=filters,
             organization_ids=organization_ids,
@@ -139,9 +138,8 @@ class OrganizationService:
         """Получить организацию по идентификатору."""
 
         organizations = await self._get_organizations(
-            filters=OrganizationFilterSchema(
-                organization_ids=str(organization_id),
-            ),
+            filters=OrganizationFilterSchema(),
+            organization_ids=[organization_id],
         )
 
         if not organizations.results:

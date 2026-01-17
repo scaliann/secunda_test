@@ -28,6 +28,7 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings(env_file_path: str | None = None) -> Settings:
     """Get settings."""
+
     if not env_file_path:
         execution_directory = pathlib.Path(__file__).parent.parent.resolve()
         env_file_path = str(execution_directory / ".env")

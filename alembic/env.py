@@ -43,10 +43,14 @@ target_metadata = Base.metadata
 
 def get_url():
     """Получаем URL базы данных из переменных окружения"""
-    return os.getenv(
-        "DATABASE_URL",
-        "postgresql+asyncpg://postgres:postgres@localhost:5430/organizations",
-    )
+
+    db_host = os.getenv("db_host", "postgres")
+    db_port = os.getenv("db_port", "5432")
+    db_name = os.getenv("db_name", "organizations")
+    db_username = os.getenv("db_username", "postgres")
+    db_password = os.getenv("db_password", "postgres")
+
+    return f"postgresql+asyncpg://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
 
 
 def run_migrations_offline() -> None:
